@@ -1,0 +1,99 @@
+INSERT INTO `inicio` (`id`, `descripcion`, `imagen`) VALUES (NULL, 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Itaque doloribus dignissimos eius beatae, sequi ipsa quia perspiciatis fuga necessitatibus totam facilis ullam sapiente ea quam, aperiam enim animi? Possimus accusamus magni enim, voluptas sit qui similique laboriosam molestiae et quia. Repellendus commodi, dolores obcaecati veritatis rem enim possimus iste dignissimos.', 'papakarol.png');
+
+INSERT INTO `nivelesacademicos` (`id`, `titulo`, `descripcion`, `imagen`) VALUES (NULL, 'inicial', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas facilis vel iure pariatur repellat. Quam, ipsum. Nesciunt ipsa dolorum doloribus nisi maiores similique enim. Nulla necessitatibus repellat, maxime iusto est voluptates inventore nesciunt distinctio aliquam dicta omnis sequi vero sed, voluptas tenetur placeat in saepe. Voluptatem eum dolor placeat asperiores!', 'inicial.jpg');
+
+
+INSERT INTO `mes` (`id`, `imagen`) VALUES (NULL, 'Mes-octubre.jpg');
+
+INSERT INTO `noticia` (`id`, `imagen`, `fecha`, `descripcion`) VALUES (NULL, 'matriculas2023.jpg', 'oct 11, 2022', 'Matriculas abiertas; click para mas informacion'), (NULL, 'matriculas2023.jpg', 'oct 11, 2022', 'Matriculas abiertas; click para mas informacion'), (NULL, 'matriculas2023.jpg', 'oct 11, 2022', 'Matriculas abiertas; click para mas informacion'), (NULL, 'matriculas2023.jpg', 'oct 11, 2022', 'Matriculas abiertas; click para mas informacion');
+
+
+<div class="cntn-flex-form">
+                    <h2 style="text-align: center; font-size: 35px; color: white;">EDITAR</h2>
+                    <div class="box-form-editar">
+
+                        <label for="descripcion">Descripcion : </label>
+                        <textarea required name="descripcion" id="" cols="30" rows="2"><?php echo $descripcion; ?>
+                        </textarea>
+
+                    </div>
+                    <div class="box-form-editar">
+
+                        <label for="imagen">Imagen : <?php echo $imagen; ?> </label>
+
+                        <img src="../img/header/<?php echo $imagen; ?>" alt="">
+
+                        <input type="file" name="imagen" id="">
+
+                        
+                    </div>
+                    <div class="box-form-editar" id="enviar-submit-posedit">
+
+                        <input type="submit" name="editar" value="Confirmar">
+
+                    </div>
+
+
+                </div>
+
+
+
+
+
+
+
+
+                <section class="form-inicio">
+    <h2 class="text-center">Niveles academicos</h2>
+    <div class="cnt-responsive">
+        <div class="form-cntn-inicio" style="flex-direction: column; align-items: center;">
+            
+                <div class="img-reseña" >
+                    <img src="../img/secciones/niveles_academicos.JPG" alt="">
+                </div>
+               
+                    <div class="vista-tabla" style="width: 100%;">
+                        <table class="table" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Titulo</th>
+                                    <th scope="col">Descripcion</th>
+                                    <th scope="col">Imagen</th>
+                                </tr>
+                            </thead>
+                            <tbody style="height: 150px;">
+                            
+                            <?php  
+                            $consulta_niveles = $conexion->prepare("SELECT * FROM `nivelesacademicos`");
+                            $consulta_niveles->execute();
+                            $niveles = $consulta_niveles->fetchAll(PDO::FETCH_ASSOC);
+
+                            foreach ($niveles as $nivel_academico){
+                            ?>
+                                <tr>
+                                    <th scope="row"><?php echo $nivel_academico['id'] ?></th>
+                                    <td><?php echo $nivel_academico['titulo'] ?></td>
+                                    <td ><?php echo $nivel_academico['descripcion'] ?></td>
+                                    <td> <?php echo $nivel_academico['imagen'] ?><img src="../img/header/<?php echo $nivel_academico['imagen'] ?>" alt=""> </td>
+                                    <td>
+                                        <div class="accion-form" style="display: flex;">
+                                            <a class="btn btn-warning" href="catinicio.php?editar=<?php echo $nivel_academico['id']; ?>&?tabla=nivel "  class="bg-warning p-2 ">
+                                                <i class="uil uil-edit"></i>
+                                                Editar
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <?php } ?>
+                                <?php  
+                                if(isset($_GET['editar'] )){
+                                    include("./recurse/editar.php");
+                                } 
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+        </div>
+    </div>
+</section>
